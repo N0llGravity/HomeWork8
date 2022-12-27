@@ -5,7 +5,7 @@ int[,] Create2dAray(int rows, int colums)
 {
     int[,] array2d = new int[rows, colums];
     for(int i = 0; i < rows; i++)
-        for(int j = 0; j < rows; j++)
+        for(int j = 0; j < colums; j++)
             array2d[i,j] = new Random(). Next(0,11);
 
     return array2d;
@@ -39,10 +39,11 @@ void FindSmallSumRow(int[,] array2d)
                     answerArray[2] = answerArray[1];
                     answerArray[0] = i;
                 }
+                answerArray[1] = 0;
             }
             
         } 
-    Console.WriteLine($"The row with minimal sum is {answerArray[0]}");
+    Console.WriteLine($"The row with minimal sum is {answerArray[0] + 1}");
 }
 
 
