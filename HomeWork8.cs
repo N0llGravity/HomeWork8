@@ -107,6 +107,8 @@ FindSmallSumRow(array2d);
 */
 
 //Задайте две матрицы. Напишите программу, которая будет находить произведение двух матриц. 
+
+
 /*//Сформируйте трёхмерный массив из неповторяющихся двузначных чисел. Напишите программу, которая будет построчно выводить массив, добавляя индексы каждого элемента.
 int[,,] Create3dArray(int l, int i, int j)
 {
@@ -121,7 +123,7 @@ void FilligArray3d(int[,,] array3d)
         for(int i = 0; i < array3d.GetLength(1); i++) 
             for(int j = 0; j < array3d.GetLength(2); j++)
                {
-                    array3d[l,i,j] = new Random(). Next(c,c+1);
+                    array3d[l,i,j] = c;
                     c++;
                }
 }
@@ -130,7 +132,7 @@ void Show3dArray(int[,,] array3d)
 {
     for(int l = 0; l < array3d.GetLength(0); l++)
     {
-        Console.WriteLine("-------------------------\n-------------------------");
+        Console.WriteLine($"-------------------------\n Layer {l + 1} \n-------------------------");
         for(int i = 0; i < array3d.GetLength(1); i++)
             {
                 for(int j = 0; j < array3d.GetLength(2); j++)
@@ -139,7 +141,9 @@ void Show3dArray(int[,,] array3d)
                 }
                 Console.WriteLine();
             }
-    }        
+        Console.WriteLine();    
+    }   
+    Console.WriteLine($"-------------------------\n End of array \n-------------------------");
 }
 
 Console.WriteLine("input number of layers ");
@@ -148,6 +152,7 @@ Console.WriteLine("input number of rows ");
 int rows = Convert.ToInt32(Console.ReadLine());
 Console.WriteLine("input number of colums ");
 int colums = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine();
 
 if(layers * rows * colums <= 90)
 {
@@ -176,9 +181,40 @@ void Show2dArray(int[,] array2d)
             Console.WriteLine();  
         }
 }
-int[,] VortexFillingArray2d(int[,] array2d)
+void VortexFillingArray2d(int[,] array2d)
 {
-
+    int i = 0;
+    int j = 0;
+    int c = 1;
+                      
+    int h = 0;                      //количество забаненых строк
+    int v = 0;                      //количество забаненых столбцов
+    int reverse = 1;                //переменная для разворота
+    
+    
+    while(c < array2d.Length)
+    {
+        for(int steps = 1;steps < array2d.GetLength(1)+1-h && j < array2d.GetLength(1)-v && c < array2d.Length; steps++)
+        {
+            array2d[i,j] = c;
+            c++;
+            j += reverse;
+        }
+        i += reverse;
+        j -= reverse;
+        
+       for(int steps = 1; steps < array2d.GetLength(0)+1-v && i < array2d.GetLength(0)-h && c < array2d.Length; steps++)
+        {
+            array2d[i,j] = c;
+            c++;
+            i += reverse;
+        }
+        j -= reverse;
+        i -= reverse;
+        v++;
+        h++;
+    }
+    reverse *= -1;    
 }
 
 Console.WriteLine("input number of rows ");
@@ -187,3 +223,7 @@ Console.WriteLine("input number of colums ");
 int colums = Convert.ToInt32(Console.ReadLine());
 
 int[,] array2d = Create2dAray(rows, colums);
+Show2dArray(array2d);
+Console.WriteLine();
+VortexFillingArray2d(array2d);
+Show2dArray(array2d);
