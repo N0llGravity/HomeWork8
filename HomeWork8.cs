@@ -187,14 +187,10 @@ void VortexFillingArray2d(int[,] array2d)
     int i = 0;
     int j = 0;
     int c = 1;                                          //Переменная для возрастания заполняемых значений
-
-    int u = 0;                                           //количество по горизонтали
-    int v = 0;                                           //количество по вертикали
-    int posStepH = array2d.GetLength(1);                 //количество шагов в данной этарации
-    int posStepV = array2d.GetLength(0);
+    int s = 0;                                          //Спиральный фактор
     while(c < array2d.Length)
     {
-        while(j < array2d.GetLength(1) && posStepH <= array2d.GetLength(1))
+        while(j < array2d.GetLength(1) - s)
         {
             array2d[i,j] = c;
             c++;
@@ -202,10 +198,9 @@ void VortexFillingArray2d(int[,] array2d)
         }
         j--;
         i++;
-        posStepV--;
 
 
-        while(i < array2d.GetLength(0) && posStepV <= array2d.GetLength(0))
+        while(i < array2d.GetLength(0) - s)
         {
             array2d[i,j] = c;
             c++;
@@ -213,10 +208,9 @@ void VortexFillingArray2d(int[,] array2d)
         }
         i--;
         j--;
-        posStepH--;
 
         
-        while(j >= 0 && posStepH < array2d.GetLength(1))
+        while(j >= s)
         {
             array2d[i,j] = c;
             c++;
@@ -224,10 +218,9 @@ void VortexFillingArray2d(int[,] array2d)
         }
         j++;
         i--;
-        posStepV--;
 
-
-        while(i >= 0 && posStepV < array2d.GetLength(0))
+        s++;
+        while(i >= s)
         {
             array2d[i,j] = c;
             c++;
@@ -235,7 +228,6 @@ void VortexFillingArray2d(int[,] array2d)
         }
         i++;
         j++;
-        posStepH--;
     }
 }
 
