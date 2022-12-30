@@ -181,40 +181,62 @@ void Show2dArray(int[,] array2d)
             Console.WriteLine();  
         }
 }
+
 void VortexFillingArray2d(int[,] array2d)
 {
     int i = 0;
     int j = 0;
-    int c = 1;
-                      
-    int h = 0;                      //количество забаненых строк
-    int v = 0;                      //количество забаненых столбцов
-    int reverse = 1;                //переменная для разворота
-    
-    
+    int c = 1;                                          //Переменная для возрастания заполняемых значений
+
+    int u = 0;                                           //количество по горизонтали
+    int v = 0;                                           //количество по вертикали
+    int posStepH = array2d.GetLength(1);                 //количество шагов в данной этарации
+    int posStepV = array2d.GetLength(0);
     while(c < array2d.Length)
     {
-        for(int steps = 1;steps < array2d.GetLength(1)+1-h && j < array2d.GetLength(1)-v && c < array2d.Length; steps++)
+        while(j < array2d.GetLength(1) && posStepH <= array2d.GetLength(1))
         {
             array2d[i,j] = c;
             c++;
-            j += reverse;
+            j++;
         }
-        i += reverse;
-        j -= reverse;
+        j--;
+        i++;
+        posStepV--;
+
+
+        while(i < array2d.GetLength(0) && posStepV <= array2d.GetLength(0))
+        {
+            array2d[i,j] = c;
+            c++;
+            i++;
+        }
+        i--;
+        j--;
+        posStepH--;
+
         
-       for(int steps = 1; steps < array2d.GetLength(0)+1-v && i < array2d.GetLength(0)-h && c < array2d.Length; steps++)
+        while(j >= 0 && posStepH < array2d.GetLength(1))
         {
             array2d[i,j] = c;
             c++;
-            i += reverse;
+            j--;
         }
-        j -= reverse;
-        i -= reverse;
-        v++;
-        h++;
+        j++;
+        i--;
+        posStepV--;
+
+
+        while(i >= 0 && posStepV < array2d.GetLength(0))
+        {
+            array2d[i,j] = c;
+            c++;
+            i--;
+        }
+        i++;
+        j++;
+        posStepH--;
     }
-    reverse *= -1;    
 }
 
 Console.WriteLine("input number of rows ");
@@ -223,7 +245,6 @@ Console.WriteLine("input number of colums ");
 int colums = Convert.ToInt32(Console.ReadLine());
 
 int[,] array2d = Create2dAray(rows, colums);
-Show2dArray(array2d);
-Console.WriteLine();
 VortexFillingArray2d(array2d);
+Console.WriteLine();
 Show2dArray(array2d);
